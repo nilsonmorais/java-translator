@@ -3,19 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dicionariodavinilson;
+package br.estacio.prii.dicionario.main;
 
 /**
  *
  * @author aluno
  */
-public class DicionarioDaviNilson {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
+public class DicionarioInglesPortugues {
     
 }
