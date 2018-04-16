@@ -43,8 +43,8 @@ br.estacio.prii.dicionario.persistencia
 
 ### Conteúdo do Frame:
 
-(JComboBox) Operação: Cadastrar/Traduzir
-(JTextField) Palavra: [ ], Tradução: [ ]
-(JRadioButton) Inglês, Português
-(JButton) Cadastrar, Traduzir, Excluir, Sair
-(JList) Palavras com Tradução
+- (JComboBox) Operação: Cadastrar/Traduzir
+- (JTextField) Palavra: [ ], Tradução: [ ]
+- (JRadioButton) Inglês, Português
+- (JButton) Cadastrar, Traduzir, Excluir, Sair
+- (JList) Palavras com Tradução
