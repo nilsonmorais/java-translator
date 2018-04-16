@@ -1,5 +1,6 @@
 # Projeto:
-* Dicionário Inglês-Português *
+
+*Dicionário Inglês-Português*
 
 # Estrutura do Projeto:
 
