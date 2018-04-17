@@ -13,10 +13,10 @@ import br.estacio.prii.dicionario.frame.FrameDicionario;
  * @author Nilson Morais / Davi Morais
  */
 public class DicionarioInglesPortugues {
-    private final FrameDicionario fd;
     
     public DicionarioInglesPortugues() {
-        this.fd = new FrameDicionario();
+        final FrameDicionario fd;
+        fd = new FrameDicionario();
         fd.setVisible(true);
     }
     public static void main(String[] args) {
