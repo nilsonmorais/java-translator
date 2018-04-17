@@ -28,9 +28,9 @@ public class FrameDicionario extends JFrame {
         setResizable(false); // não permite o redimensionamento
         resizeWindow(this);
         centerWindow(this);
-        setLayout(new GridLayout(3, 1));
+//        setLayout(new GridLayout(3, 1));
         createMenus();
-
+        createCardLayout();
     }
     public static void centerWindow(Window frame) {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -96,5 +96,10 @@ public class FrameDicionario extends JFrame {
         menuBar.add(fileOp);
         
         this.setMenuBar(menuBar);
+    }
+
+    private void createCardLayout() {
+        CardLayoutDicionario cl = new CardLayoutDicionario();
+        cl.addComponentToPane(this.getContentPane());
     }
 }
