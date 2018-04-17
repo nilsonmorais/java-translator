@@ -5,10 +5,23 @@
  */
 package br.estacio.prii.dicionario.main;
 
+import br.estacio.prii.dicionario.frame.FrameDicionario;
+
+
 /**
  *
- * @author aluno
+ * @author Nilson Morais / Davi Morais
  */
 public class DicionarioInglesPortugues {
+    private final FrameDicionario fd;
     
+    public DicionarioInglesPortugues() {
+        this.fd = new FrameDicionario();
+        fd.setVisible(true);
+    }
+    public static void main(String[] args) {
+        DicionarioInglesPortugues dic = new DicionarioInglesPortugues();
+    }
+    
+   
 }
