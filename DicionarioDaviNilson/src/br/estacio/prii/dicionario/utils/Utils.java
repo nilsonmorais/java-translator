@@ -78,14 +78,13 @@ public class Utils {
     public static JButton createButtonWithIcon(String label, String icon) {
         JButton button = new JButton();
         button.setBorderPainted(false);
-        //button.setText(label);
         button.setToolTipText(label);
         if (icon != null) {
-            button.setIcon(getIconForButton("New24.gif"));
+            button.setIcon(getIconForButton(icon));
         }
         return button;
     }
-    private static ImageIcon getIconForButton(String iconName) {
+    public static ImageIcon getIconForButton(String iconName) {
         String urlString = "/toolbarButtonGraphics/general/" + iconName;
         URL url = Utils.class.getClass().getResource(urlString);
         return new ImageIcon(url);

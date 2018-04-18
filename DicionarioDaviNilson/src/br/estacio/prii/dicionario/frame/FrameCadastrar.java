@@ -5,8 +5,14 @@
  */
 package br.estacio.prii.dicionario.frame;
 
+import br.estacio.prii.dicionario.utils.Utils;
+import static br.estacio.prii.dicionario.utils.Utils.getIconForButton;
+import java.awt.GridBagLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
 /**
  *
@@ -15,9 +21,25 @@ import javax.swing.JPanel;
 class FrameCadastrar extends JPanel {
 
     public FrameCadastrar() {
-        this.add(new JButton("Button 1"));
-        this.add(new JButton("Button 2"));
-        this.add(new JButton("Button 3"));
+        this.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastrar"));
+        this.setLayout(new GridBagLayout());
+        
+        JTextField textPalavra = new JTextField("",15);
+        JTextField textTraducao = new JTextField("",15);
+        
+        this.add(new JLabel("Palavra:"), Utils.createGridBagConstraints(0, 0, Utils.pad10, null));
+        this.add(textPalavra, Utils.createGridBagConstraints(1, 0));
+        
+        this.add(new JRadioButton("Inglês"), Utils.createGridBagConstraints(2, 0, Utils.pad10, null));
+        this.add(new JRadioButton("Português"), Utils.createGridBagConstraints(3, 0));
+        
+        this.add(new JLabel("Tradução:"), Utils.createGridBagConstraints(0, 1, Utils.pad10, null));
+        this.add(textTraducao, Utils.createGridBagConstraints(1, 1));
+        
+        JButton btnCadastrar = new JButton("Cadastrar");
+        btnCadastrar.setIcon(getIconForButton("Save24.gif"));
+        
+        this.add(btnCadastrar, Utils.createGridBagConstraints(0, 2, Utils.pad20, null));
     }
     
 }

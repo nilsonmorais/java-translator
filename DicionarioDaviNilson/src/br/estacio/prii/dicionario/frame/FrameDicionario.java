@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import br.estacio.prii.dicionario.utils.*;
+import java.awt.event.ActionEvent;
 
 /**
  *
@@ -17,6 +18,7 @@ import br.estacio.prii.dicionario.utils.*;
 public class FrameDicionario extends JFrame {
 
     final static String APPTITLE = "Dicionário";
+    private CardLayoutDicionario cardLayoutDicionario = new CardLayoutDicionario();
 
     public FrameDicionario() throws HeadlessException {
         initFrame();
@@ -53,8 +55,14 @@ public class FrameDicionario extends JFrame {
 
         MenuItem cadastrarMenuItem = new MenuItem("Cadastrar");
         cadastrarMenuItem.setActionCommand("Cadastrar");
+        cadastrarMenuItem.addActionListener((ActionEvent e) -> {
+            cardLayoutDicionario.changeLayoutEvent(cadastrarMenuItem.getActionCommand());
+        });
         MenuItem traduzirMenuItem = new MenuItem("Traduzir");
         traduzirMenuItem.setActionCommand("Traduzir");
+        traduzirMenuItem.addActionListener((ActionEvent e) -> {
+            cardLayoutDicionario.changeLayoutEvent(traduzirMenuItem.getActionCommand());
+        });
 
         //EventListener
         MenuItemListener menuItemListener = new MenuItemListener();
@@ -83,22 +91,21 @@ public class FrameDicionario extends JFrame {
         this.setMenuBar(menuBar);
     }
 
-    private CardLayoutDicionario createCardLayout() {
-        CardLayoutDicionario cl = new CardLayoutDicionario();
-        return cl;
-    }
-
     private JToolBar createToolbar() {
         final JToolBar toolBar = new JToolBar();
         toolBar.setBorderPainted(false);
         toolBar.setFloatable(false);
 
-        JButton btnChange = Utils.createButtonWithIcon("Operação", "Undo24.gif");
-        ActionListener btnChangeAction = null;
+        JButton btnChange = Utils.createButtonWithIcon("Operação", "Refresh24.gif");
+        JButton btnAbout = Utils.createButtonWithIcon("Sobre", "About24.gif");
+        ActionListener btnChangeAction = (ActionEvent e) -> {
+            cardLayoutDicionario.toggleLayoutEvent();
+        };
         btnChange.addActionListener(btnChangeAction);
 
         toolBar.add(btnChange);
         toolBar.addSeparator(new Dimension(2, 0));
+        toolBar.add(btnAbout);
 
         return toolBar;
     }
@@ -116,7 +123,8 @@ public class FrameDicionario extends JFrame {
 
         pane.setLayout(new GridBagLayout());
         pane.add(createToolbar(), Utils.createGridBagConstraints(0, 0, null, null));
-        pane.add(createCardLayout(), Utils.createGridBagConstraints(0, 1, null, null));
+        pane.add(cardLayoutDicionario, Utils.createGridBagConstraints(0, 1, null, null));
+        pane.add(new panelListAllWords(), Utils.createGridBagConstraints(0, 2, Utils.pad10, null));
     }
 
 }

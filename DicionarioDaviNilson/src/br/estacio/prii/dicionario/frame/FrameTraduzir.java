@@ -15,6 +15,8 @@ import javax.swing.JTextField;
 class FrameTraduzir extends JPanel {
 
     public FrameTraduzir() {
+        this.setBorder(javax.swing.BorderFactory.createTitledBorder("Traduzir"));
+
         this.add(new JTextField("TextField", 20));
     }
 
