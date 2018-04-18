@@ -5,6 +5,7 @@
  */
 package br.estacio.prii.dicionario.frame;
 
+import br.estacio.prii.dicionario.utils.Utils;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -24,11 +25,9 @@ public class CardLayoutDicionario extends JPanel {
         
         JPanel comboBoxPane = new JPanel(); 
         comboBoxPane.setLayout(new GridBagLayout());
+        this.setLayout(new GridBagLayout());
         
         JLabel labelSelectMode = new JLabel("Selecione Operação:");
-        
-        GridBagConstraints bagConstraintsSelectMode = new GridBagConstraints();
-        bagConstraintsSelectMode.gridx=0;
         
         String comboBoxItems[] = { BUTTONPANEL, TEXTPANEL };
         JComboBox cb = new JComboBox(comboBoxItems);
@@ -37,27 +36,21 @@ public class CardLayoutDicionario extends JPanel {
             CardLayout cl = (CardLayout)(cards.getLayout());
             cl.show(cards, (String)e.getItem());
         });
-        
-        
-        comboBoxPane.add(labelSelectMode);
-        comboBoxPane.add(cb);
+       
+        comboBoxPane.add(labelSelectMode, Utils.createGridBagConstraints(0, 0, Utils.pad10, null));
+        comboBoxPane.add(cb,Utils.createGridBagConstraints(1, 0));
          
         //Create the "cards".
-        JPanel card1 = new JPanel();
-        card1.add(new JButton("Button 1"));
-        card1.add(new JButton("Button 2"));
-        card1.add(new JButton("Button 3"));
-         
-        JPanel card2 = new JPanel();
-        card2.add(new JTextField("TextField", 20));
+        JPanel cardCadastrar = new FrameCadastrar();
+        JPanel cardTraduzir = new FrameTraduzir();
          
         //Create the panel that contains the "cards".
         cards = new JPanel(new CardLayout());
-        cards.add(card1, BUTTONPANEL);
-        cards.add(card2, TEXTPANEL);
+        cards.add(cardCadastrar, BUTTONPANEL);
+        cards.add(cardTraduzir, TEXTPANEL);
         
-        this.add(comboBoxPane, BorderLayout.PAGE_START);
-        this.add(cards, BorderLayout.CENTER);
+        this.add(comboBoxPane, Utils.createGridBagConstraints(0, 0, Utils.pad10, null));
+        this.add(cards, Utils.createGridBagConstraints(0, 1));
 
     }
     
