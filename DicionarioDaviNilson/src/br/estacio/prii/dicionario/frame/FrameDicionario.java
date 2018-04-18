@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.net.URL;
 import javax.swing.*;
-import net.miginfocom.swing.MigLayout;
 
 /**
  *
@@ -33,10 +32,10 @@ public class FrameDicionario extends JFrame {
         createMenus();
 
         Container pane = this.getContentPane();
-        pane.setLayout(new MigLayout());
+        pane.setLayout(new GridBagLayout());
 
-        pane.add(createToolbar(), "wrap");
-//        pane.add(createCardLayout());
+        pane.add(createToolbar(), getToolbarConstrains());
+
     }
 
     private void createMenus() {
@@ -142,6 +141,14 @@ public class FrameDicionario extends JFrame {
         toolBar.addSeparator(new Dimension(2, 0));
 
         return toolBar;
+    }
+
+    private GridBagConstraints getToolbarConstrains() {
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 2;
+        c.insets = new Insets(0, 12, 11, 11);
+        return c;
     }
 
 }
