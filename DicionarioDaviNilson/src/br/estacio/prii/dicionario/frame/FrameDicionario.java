@@ -18,7 +18,7 @@ import java.awt.event.ActionEvent;
 public class FrameDicionario extends JFrame {
 
     final static String APPTITLE = "Dicionário";
-    private CardLayoutDicionario cardLayoutDicionario = new CardLayoutDicionario();
+    private final CardLayoutDicionario cardLayoutDicionario = new CardLayoutDicionario();
 
     public FrameDicionario() throws HeadlessException {
         initFrame();
@@ -114,8 +114,6 @@ public class FrameDicionario extends JFrame {
         setTitle(APPTITLE); // título do Frame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false); // não permite o redimensionamento
-        Utils.centerWindow(this);
-
     }
 
     private void addComponents() {
@@ -125,6 +123,8 @@ public class FrameDicionario extends JFrame {
         pane.add(createToolbar(), Utils.createGridBagConstraints(0, 0, null, null));
         pane.add(cardLayoutDicionario, Utils.createGridBagConstraints(0, 1, null, null));
         pane.add(new panelListAllWords(), Utils.createGridBagConstraints(0, 2, Utils.pad10, null));
+        
+        pack();
     }
 
 }

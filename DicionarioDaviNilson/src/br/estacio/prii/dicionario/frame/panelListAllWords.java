@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -36,7 +37,7 @@ class panelListAllWords extends JPanel {
 
         this.add(CreateListAllWords(), Utils.createGridBagConstraints(0, 0, Utils.pad20, null));
         this.add(btnExcluir, Utils.createGridBagConstraints(1, 0));
-        this.add(new JLabel("Total de Palavras: 10"), Utils.createGridBagConstraints(0, 1, Utils.pad10, null));
+        this.add(new JLabel("Total de Palavras: 10"), Utils.createGridBagConstraints(0, 1, Utils.pad10, GridBagConstraints.HORIZONTAL));
     }
 
     private JPanel CreateListAllWords() {
@@ -45,11 +46,14 @@ class panelListAllWords extends JPanel {
 
         scrollPanel = new JScrollPane();
         list = new JList<String>();
-        list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+        list.setLayoutOrientation(JList.VERTICAL);
         list.setVisibleRowCount(-1);
         list.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
         list.setPreferredSize(new Dimension(150, 200));
-
+        scrollPanel.setPreferredSize(new Dimension(150, 200));
+        
         list.setModel(new AbstractListModel<String>() {
             String[] strings = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
 

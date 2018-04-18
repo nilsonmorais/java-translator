@@ -6,6 +6,7 @@
 package br.estacio.prii.dicionario.main;
 
 import br.estacio.prii.dicionario.frame.FrameDicionario;
+import br.estacio.prii.dicionario.utils.Utils;
 
 
 /**
@@ -14,9 +15,11 @@ import br.estacio.prii.dicionario.frame.FrameDicionario;
  */
 public class DicionarioInglesPortugues {
     
+    final FrameDicionario fd;
+    
     public DicionarioInglesPortugues() {
-        final FrameDicionario fd;
         fd = new FrameDicionario();
+        Utils.centerWindow(fd);
         fd.setVisible(true);
     }
     public static void main(String[] args) {
