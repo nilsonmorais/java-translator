@@ -7,8 +7,8 @@ package br.estacio.prii.dicionario.frame;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.net.URL;
 import javax.swing.*;
+import br.estacio.prii.dicionario.utils.*;
 
 /**
  *
@@ -88,43 +88,12 @@ public class FrameDicionario extends JFrame {
         return cl;
     }
 
-    private JButton createButton(String label, String icon) {
-        JButton button = new JButton();
-        button.setBorderPainted(false);
-        //button.setText(label);
-        button.setToolTipText(label);
-        if (icon != null) {
-            button.setIcon(getIconForButton("New24.gif"));
-        }
-        return button;
-    }
-
-    private ImageIcon getIconForButton(String iconName) {
-        String urlString = "/toolbarButtonGraphics/general/" + iconName;
-        URL url = this.getClass().getResource(urlString);
-        return new ImageIcon(url);
-    }
-
-    private static void centerWindow(JFrame frame) {
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
-        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
-        frame.setLocation(x, y);
-    }
-
-    private static Dimension getWindowDimensions() {
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (int) (dimension.getWidth() / 2);
-        int y = (int) (dimension.getHeight() / 2);
-        return new Dimension(x, y);
-    }
-
     private JToolBar createToolbar() {
         final JToolBar toolBar = new JToolBar();
         toolBar.setBorderPainted(false);
         toolBar.setFloatable(false);
 
-        JButton btnChange = createButton("Operação", "Undo24.gif");
+        JButton btnChange = Utils.createButtonWithIcon("Operação", "Undo24.gif");
         ActionListener btnChangeAction = null;
         btnChange.addActionListener(btnChangeAction);
 
@@ -134,40 +103,20 @@ public class FrameDicionario extends JFrame {
         return toolBar;
     }
 
-    private GridBagConstraints getToolbarConstrains() {
-        GridBagConstraints c = new GridBagConstraints();
-        c.gridx = 0;
-        c.gridy = 0;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.0;
-        return c;
-    }
-
-    private GridBagConstraints getCardLayoutConstrains() {
-        GridBagConstraints c = new GridBagConstraints();
-        c.gridx = 0;
-        c.gridy = 1;
-        c.insets = new Insets(11, 12, 11, 11);
-        c.fill = GridBagConstraints.NORTH;
-
-        return c;
-    }
-
     private void setFrameOptions() {
-        centerWindow(this);
         setTitle(APPTITLE); // título do Frame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false); // não permite o redimensionamento
+        Utils.centerWindow(this);
 
     }
 
     private void addComponents() {
         Container pane = this.getContentPane();
-        pane.setLayout(new GridBagLayout());
-        pane.setPreferredSize(getWindowDimensions());
-        pane.add(createToolbar(), getToolbarConstrains());
-        pane.add(createCardLayout(), getCardLayoutConstrains());
 
+        pane.setLayout(new GridBagLayout());
+        pane.add(createToolbar(), Utils.createGridBagConstraints(0, 0, null, null));
+        pane.add(createCardLayout(), Utils.createGridBagConstraints(0, 1, null, null));
     }
 
 }

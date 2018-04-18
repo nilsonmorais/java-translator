@@ -17,12 +17,19 @@ public class CardLayoutDicionario extends JPanel {
     
     JPanel cards; //a panel that uses CardLayout
     
-    final static String BUTTONPANEL = "Card with JButtons";
-    final static String TEXTPANEL = "Card with JTextField";
+    final static String BUTTONPANEL = "Cadastrar";
+    final static String TEXTPANEL = "Traduzir";
 
     public CardLayoutDicionario() {
         
-        JPanel comboBoxPane = new JPanel(); //use FlowLayout
+        JPanel comboBoxPane = new JPanel(); 
+        comboBoxPane.setLayout(new GridBagLayout());
+        
+        JLabel labelSelectMode = new JLabel("Selecione Operação:");
+        
+        GridBagConstraints bagConstraintsSelectMode = new GridBagConstraints();
+        bagConstraintsSelectMode.gridx=0;
+        
         String comboBoxItems[] = { BUTTONPANEL, TEXTPANEL };
         JComboBox cb = new JComboBox(comboBoxItems);
         cb.setEditable(false);
@@ -30,6 +37,9 @@ public class CardLayoutDicionario extends JPanel {
             CardLayout cl = (CardLayout)(cards.getLayout());
             cl.show(cards, (String)e.getItem());
         });
+        
+        
+        comboBoxPane.add(labelSelectMode);
         comboBoxPane.add(cb);
          
         //Create the "cards".
