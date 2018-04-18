@@ -21,6 +21,7 @@ public class FrameDicionario extends JFrame {
     private final CardLayoutDicionario cardLayoutDicionario = new CardLayoutDicionario();
 
     public FrameDicionario() throws HeadlessException {
+        super();
         initFrame();
     }
 
@@ -28,7 +29,6 @@ public class FrameDicionario extends JFrame {
         setFrameOptions();
         createMenus();
         addComponents();
-        pack();
     }
 
     private void createMenus() {

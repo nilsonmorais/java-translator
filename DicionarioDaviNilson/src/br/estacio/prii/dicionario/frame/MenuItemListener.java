@@ -13,7 +13,8 @@ import java.awt.event.ActionListener;
  * @author aluno
  */
 class MenuItemListener implements ActionListener {
-    public void actionPerformed(ActionEvent e) {            
-         System.out.print(e.getActionCommand() + " MenuItem clicked.");
-      }    
+
+    public void actionPerformed(ActionEvent e) {
+        System.out.print(e.getActionCommand() + " MenuItem clicked.");
+    }
 }

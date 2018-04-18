@@ -29,6 +29,7 @@ class panelListAllWords extends JPanel {
     private JList<String> list;
 
     public panelListAllWords() {
+        super();
         this.setBorder(javax.swing.BorderFactory.createTitledBorder("Dicionário"));
         this.setLayout(new GridBagLayout());
 

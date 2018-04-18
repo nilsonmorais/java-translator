@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 class FrameTraduzir extends JPanel {
 
     public FrameTraduzir() {
+        super();
         this.setBorder(javax.swing.BorderFactory.createTitledBorder("Traduzir"));
         this.setLayout(new GridBagLayout());
         

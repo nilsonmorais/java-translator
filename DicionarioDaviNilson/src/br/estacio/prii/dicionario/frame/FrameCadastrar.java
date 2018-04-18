@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 class FrameCadastrar extends JPanel {
 
     public FrameCadastrar() {
+        super();
         this.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastrar"));
         this.setLayout(new GridBagLayout());
         

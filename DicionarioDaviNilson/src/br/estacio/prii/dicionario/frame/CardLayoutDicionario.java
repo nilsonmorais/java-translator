@@ -23,7 +23,7 @@ public class CardLayoutDicionario extends JPanel {
     private final JComboBox comboSelect;
     
     public CardLayoutDicionario() {
-
+        super();
         JPanel comboBoxPane = new JPanel();
         comboBoxPane.setLayout(new GridBagLayout());
         this.setLayout(new GridBagLayout());
