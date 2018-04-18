@@ -16,26 +16,17 @@ import javax.swing.*;
  */
 public class FrameDicionario extends JFrame {
 
+    final static String APPTITLE = "Dicionário";
+
     public FrameDicionario() throws HeadlessException {
         initFrame();
     }
 
     private void initFrame() {
-
-        setTitle("Dicionário"); // título do Frame
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setResizable(false); // não permite o redimensionamento
-
-        resizeWindow(this);
-        centerWindow(this);
-
+        setFrameOptions();
         createMenus();
-
-        Container pane = this.getContentPane();
-        pane.setLayout(new GridBagLayout());
-
-        pane.add(createToolbar(), getToolbarConstrains());
-
+        addComponents();
+        pack();
     }
 
     private void createMenus() {
@@ -114,18 +105,18 @@ public class FrameDicionario extends JFrame {
         return new ImageIcon(url);
     }
 
-    private static void centerWindow(Window frame) {
+    private static void centerWindow(JFrame frame) {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
         int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
         frame.setLocation(x, y);
     }
 
-    private static void resizeWindow(Window frame) {
+    private static Dimension getWindowDimensions() {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) (dimension.getWidth() / 2);
         int y = (int) (dimension.getHeight() / 2);
-        frame.setSize(x, y);
+        return new Dimension(x, y);
     }
 
     private JToolBar createToolbar() {
@@ -146,9 +137,37 @@ public class FrameDicionario extends JFrame {
     private GridBagConstraints getToolbarConstrains() {
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
-        c.gridy = 2;
-        c.insets = new Insets(0, 12, 11, 11);
+        c.gridy = 0;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.0;
         return c;
+    }
+
+    private GridBagConstraints getCardLayoutConstrains() {
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 1;
+        c.insets = new Insets(11, 12, 11, 11);
+        c.fill = GridBagConstraints.NORTH;
+
+        return c;
+    }
+
+    private void setFrameOptions() {
+        centerWindow(this);
+        setTitle(APPTITLE); // título do Frame
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false); // não permite o redimensionamento
+
+    }
+
+    private void addComponents() {
+        Container pane = this.getContentPane();
+        pane.setLayout(new GridBagLayout());
+        pane.setPreferredSize(getWindowDimensions());
+        pane.add(createToolbar(), getToolbarConstrains());
+        pane.add(createCardLayout(), getCardLayoutConstrains());
+
     }
 
 }
