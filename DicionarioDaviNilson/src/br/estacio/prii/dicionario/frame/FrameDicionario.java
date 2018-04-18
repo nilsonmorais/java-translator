@@ -19,6 +19,11 @@ public class FrameDicionario extends JFrame {
 
     final static String APPTITLE = "Dicionário";
     private final CardLayoutDicionario cardLayoutDicionario = new CardLayoutDicionario();
+    final static String ABOUTTEXT = "Trabalho de Programação II.\n"
+            + "Tradutor Inglês/Português.\n"
+            + "Equipe:\n"
+            + "Davi Morais (201703123451)\n"
+            + "Nilson Morais (201007055561)\n";
 
     public FrameDicionario() throws HeadlessException {
         super();
@@ -39,6 +44,9 @@ public class FrameDicionario extends JFrame {
 
         MenuItem sobreMenuItem = new MenuItem("Sobre");
         sobreMenuItem.setActionCommand("Sobre");
+        sobreMenuItem.addActionListener((ActionEvent e) -> {
+            showAboutDialog();
+        });
         MenuItem sairMenuItem = new MenuItem("Sair");
         sairMenuItem.setActionCommand("Sair");
 
@@ -101,6 +109,11 @@ public class FrameDicionario extends JFrame {
         ActionListener btnChangeAction = (ActionEvent e) -> {
             cardLayoutDicionario.toggleLayoutEvent();
         };
+         ActionListener btnAboutAction = (ActionEvent e) -> {
+            showAboutDialog();
+        };
+        
+        btnAbout.addActionListener(btnAboutAction);
         btnChange.addActionListener(btnChangeAction);
 
         toolBar.add(btnChange);
@@ -123,8 +136,11 @@ public class FrameDicionario extends JFrame {
         pane.add(createToolbar(), Utils.createGridBagConstraints(0, 0, null, null));
         pane.add(cardLayoutDicionario, Utils.createGridBagConstraints(0, 1, null, null));
         pane.add(new panelListAllWords(), Utils.createGridBagConstraints(0, 2, Utils.pad10, null));
-        
         pack();
+    }
+
+    private void showAboutDialog() {
+        JOptionPane.showMessageDialog(null, ABOUTTEXT);
     }
 
 }
