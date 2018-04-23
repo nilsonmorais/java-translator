@@ -8,9 +8,11 @@ package br.estacio.prii.dicionario.frame;
 import br.estacio.prii.dicionario.utils.Utils;
 import static br.estacio.prii.dicionario.utils.Utils.getIconForButton;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -49,8 +51,15 @@ class FrameCadastrar extends JPanel {
         
         JButton btnCadastrar = new JButton("Cadastrar");
         btnCadastrar.setIcon(getIconForButton("Save24.gif"));
+        btnCadastrar.addActionListener((ActionEvent e) -> {
+            cadastrarItem();
+        });
         
         this.add(btnCadastrar, Utils.createGridBagConstraints(0, 2, Utils.pad20, null));
+    }
+
+    private void cadastrarItem() {
+        JOptionPane.showMessageDialog(null, "Item cadastrado com sucesso.");
     }
     
 }

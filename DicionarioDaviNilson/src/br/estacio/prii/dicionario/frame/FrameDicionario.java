@@ -45,6 +45,15 @@ public class FrameDicionario extends JFrame {
         });
         MenuItem sairMenuItem = new MenuItem("Sair");
         sairMenuItem.setActionCommand("Sair");
+        sairMenuItem.addActionListener((ActionEvent e) -> {
+            if (JOptionPane.showConfirmDialog(null,
+            "Tem certeza que deseja sair?",
+            "Confirme a saída.",
+            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION
+        ) {
+            System.exit(0);
+        }
+        });
 
         //Menu Dicionario
         Menu fileDic = new Menu("Dicionário");

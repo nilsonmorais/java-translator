@@ -11,10 +11,12 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
 import javax.swing.AbstractListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -35,6 +37,9 @@ class panelListAllWords extends JPanel {
 
         JButton btnExcluir = new JButton("Excluir");
         btnExcluir.setIcon(getIconForButton("Delete24.gif"));
+         btnExcluir.addActionListener((ActionEvent e) -> {
+            excluirItem();
+        });
 
         this.add(CreateListAllWords(), Utils.createGridBagConstraints(0, 0, Utils.pad20, null));
         this.add(btnExcluir, Utils.createGridBagConstraints(1, 0));
@@ -70,6 +75,10 @@ class panelListAllWords extends JPanel {
 
         panelContainer.add(list, Utils.createGridBagConstraints(0, 0));
         return panelContainer;
+    }
+
+    private void excluirItem() {
+        JOptionPane.showMessageDialog(null, "Item excluído.");
     }
 
 }
