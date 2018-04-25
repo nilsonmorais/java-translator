@@ -1,11 +1,14 @@
 
 package br.estacio.prii.dicionario.frame;
 
+import br.estacio.prii.dicionario.entidade.Dicionario;
+import br.estacio.prii.dicionario.entidade.Dicionario.Traducao;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import br.estacio.prii.dicionario.utils.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,10 +23,13 @@ public class FrameDicionario extends JFrame {
             + "Equipe:\n"
             + "Davi Morais (201703123451)\n"
             + "Nilson Morais (201007055561)\n";
+    private panelListAllWords listaDicionario = new panelListAllWords();
+    public static Dicionario mainDicionario = new Dicionario();
 
     public FrameDicionario() throws HeadlessException {
         super();
         initFrame();
+        carregarDicionario();
     }
 
     private void initFrame() {
@@ -140,12 +146,19 @@ public class FrameDicionario extends JFrame {
         pane.setLayout(new GridBagLayout());
         pane.add(createToolbar(), Utils.createGridBagConstraints(0, 0, null, null));
         pane.add(cardLayoutDicionario, Utils.createGridBagConstraints(0, 1, null, null));
-        pane.add(new panelListAllWords(), Utils.createGridBagConstraints(0, 2, Utils.pad10, null));
+        pane.add(listaDicionario, Utils.createGridBagConstraints(0, 2, Utils.pad10, null));
         pack();
     }
 
     private void showAboutDialog() {
         JOptionPane.showMessageDialog(null, ABOUTTEXT);
+    }
+
+    private void carregarDicionario() {
+        ArrayList<Traducao> all = mainDicionario.getDicionario();
+        for (int i = 0; i < all.size(); i++) {
+            listaDicionario.add(all.get(i).toString());
+        }
     }
 
 }
