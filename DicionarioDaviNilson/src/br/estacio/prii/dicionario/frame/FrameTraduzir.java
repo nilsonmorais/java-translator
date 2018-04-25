@@ -22,19 +22,19 @@ import javax.swing.JTextField;
  * @author 97836834387
  */
 class FrameTraduzir extends JPanel {
+        ButtonGroup radioGroup = new ButtonGroup();
+        JRadioButton radioIngles = new JRadioButton("Inglês");
+        JRadioButton radioPortugues = new JRadioButton("Português");
+        
+        JTextField textPalavra = new JTextField("",15);
+        JLabel textTraducao = new JLabel("");
 
     public FrameTraduzir() {
         super();
         this.setBorder(javax.swing.BorderFactory.createTitledBorder("Traduzir"));
         this.setLayout(new GridBagLayout());
         
-        JTextField textPalavra = new JTextField("",15);
-        JTextField textTraducao = new JTextField("",15);
-        
-        ButtonGroup radioGroup = new ButtonGroup();
-        JRadioButton radioIngles = new JRadioButton("Inglês");
         radioIngles.setSelected(true);
-        JRadioButton radioPortugues = new JRadioButton("Português");
         radioGroup.add(radioIngles);
         radioGroup.add(radioPortugues);
         
@@ -54,13 +54,26 @@ class FrameTraduzir extends JPanel {
         this.add(btnTraduzir, Utils.createGridBagConstraints(3, 1));
         
         this.add(new JLabel("Tradução:"), Utils.createGridBagConstraints(0, 2, Utils.pad10, null));
-        this.add(new JLabel("wwwwww"), Utils.createGridBagConstraints(1, 2));
+        this.add(textTraducao, Utils.createGridBagConstraints(1, 2));
+        //this.add(new JLabel("wwwwww"), Utils.createGridBagConstraints(1, 2));
         
         
     }
 
     private void traduzirItem() {
-        JOptionPane.showMessageDialog(null, "Ok.");  //remover esse dialogo depois e adicionar a funçao no lugar
+        if (radioIngles.isSelected() == true) {
+           if (textPalavra.getText().isEmpty() == true) {
+                JOptionPane.showMessageDialog(null, "Por favor insira uma palavra.");
+            } else {
+                 textTraducao.setText("Traduzido para Inglês: '" + textPalavra.getText() + "'.");
+            }
+        }
+        if (radioPortugues.isSelected() == true) {
+            if (textPalavra.getText().isEmpty() == true) {
+                JOptionPane.showMessageDialog(null, "Por favor insira uma palavra.");
+            } else {
+                textTraducao.setText("Traduzido para Português: '" + textPalavra.getText() + "'.");
+            }
+        }
     }
-
 }
