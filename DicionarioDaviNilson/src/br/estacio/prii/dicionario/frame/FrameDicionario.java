@@ -1,11 +1,14 @@
-
 package br.estacio.prii.dicionario.frame;
 
+import br.estacio.prii.dicionario.entidade.Dicionario;
+import br.estacio.prii.dicionario.entidade.Dicionario.Traducao;
+import br.estacio.prii.dicionario.persistencia.DAO;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import br.estacio.prii.dicionario.utils.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,16 +17,23 @@ import java.awt.event.ActionEvent;
 public class FrameDicionario extends JFrame {
 
     final static String APPTITLE = "Dicionário";
+
+    public static void refreshList() {
+//        listaDicionario
+    }
     private final CardLayoutDicionario cardLayoutDicionario = new CardLayoutDicionario();
     final static String ABOUTTEXT = "Trabalho de Programação II.\n"
             + "Tradutor Inglês/Português.\n"
             + "Equipe:\n"
             + "Davi Morais (201703123451)\n"
             + "Nilson Morais (201007055561)\n";
+    private panelListAllWords listaDicionario = new panelListAllWords();
+    public static Dicionario mainDicionario = new Dicionario();
 
     public FrameDicionario() throws HeadlessException {
         super();
         initFrame();
+        carregarDicionario();
     }
 
     private void initFrame() {
@@ -47,12 +57,11 @@ public class FrameDicionario extends JFrame {
         sairMenuItem.setActionCommand("Sair");
         sairMenuItem.addActionListener((ActionEvent e) -> {
             if (JOptionPane.showConfirmDialog(null,
-            "Tem certeza que deseja sair?",
-            "Confirme a saída.",
-            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION
-        ) {
-            System.exit(0);
-        }
+                    "Tem certeza que deseja sair?",
+                    "Confirme a saída.",
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }
         });
 
         //Menu Dicionario
@@ -60,8 +69,14 @@ public class FrameDicionario extends JFrame {
 
         MenuItem salvarMenuItem = new MenuItem("Salvar");
         salvarMenuItem.setActionCommand("Salvar");
+        salvarMenuItem.addActionListener((ActionEvent ae) -> {
+            salvarDicionarioAction();
+        });
         MenuItem carregarMenuItem = new MenuItem("Carregar");
         carregarMenuItem.setActionCommand("Carregar");
+        carregarMenuItem.addActionListener((ActionEvent ae) -> {
+            carregarDicionarioAction();
+        });
 
         //Menu Operações
         Menu fileOp = new Menu("Operação");
@@ -114,10 +129,10 @@ public class FrameDicionario extends JFrame {
         ActionListener btnChangeAction = (ActionEvent e) -> {
             cardLayoutDicionario.toggleLayoutEvent();
         };
-         ActionListener btnAboutAction = (ActionEvent e) -> {
+        ActionListener btnAboutAction = (ActionEvent e) -> {
             showAboutDialog();
         };
-        
+
         btnAbout.addActionListener(btnAboutAction);
         btnChange.addActionListener(btnChangeAction);
 
@@ -140,12 +155,31 @@ public class FrameDicionario extends JFrame {
         pane.setLayout(new GridBagLayout());
         pane.add(createToolbar(), Utils.createGridBagConstraints(0, 0, null, null));
         pane.add(cardLayoutDicionario, Utils.createGridBagConstraints(0, 1, null, null));
-        pane.add(new panelListAllWords(), Utils.createGridBagConstraints(0, 2, Utils.pad10, null));
+        pane.add(listaDicionario, Utils.createGridBagConstraints(0, 2, Utils.pad10, null));
         pack();
     }
 
     private void showAboutDialog() {
         JOptionPane.showMessageDialog(null, ABOUTTEXT);
+    }
+
+    private void carregarDicionario() {
+        ArrayList<Traducao> all = mainDicionario.getDicionario();
+        for (int i = 0; i < all.size(); i++) {
+            listaDicionario.add(all.get(i).toString());
+        }
+    }
+
+    private void salvarDicionarioAction() {
+        try {
+            mainDicionario.GravarDados();
+        } catch (Exception e) {
+            Utils.showDialog(e.getMessage());
+        }
+    }
+
+    private void carregarDicionarioAction() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -14,6 +14,7 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -58,6 +59,9 @@ public class Utils {
         return new Dimension(x, y);
     }
 
+    public static void showDialog(String msg) {
+        JOptionPane.showMessageDialog(null, msg);
+    }
     /**
      * 
      * @param frame  The object to centralize
