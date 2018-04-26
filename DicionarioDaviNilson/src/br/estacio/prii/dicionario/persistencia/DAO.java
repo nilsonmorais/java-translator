@@ -25,7 +25,7 @@ public class DAO {
             BufferedWriter arq = new BufferedWriter(
                 new FileWriter(new File(filePath))
             );
-            
+
             for (int i = 0; i < dic.size(); i++) {
                 arq.write((String) dic.get(i));
                 arq.newLine();
@@ -33,29 +33,29 @@ public class DAO {
             arq.close();
         } catch (IOException e) {
             throw new Exception(e.getMessage());
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
     }
 
-    void lerDados() {
+    public ArrayList lerDados() throws Exception {
         try {
             BufferedReader arq = new BufferedReader(
                 new FileReader(new File(filePath))
             );
-            
-            String dados[];
+
+            ArrayList<String> dados = new ArrayList<>();
             String str;
-            Dicionario dic = new Dicionario();
-            
+
             str = arq.readLine();
             while (str != null) {
-                dic.parseTraducao(str);
+                dados.add(str);
                 str = arq.readLine();
             }
             arq.close();
+            return dados;
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new Exception(e.getMessage());
         }
     }
 
@@ -72,5 +72,4 @@ public class DAO {
 //        output.flush();
 //        output.close();
 //    }
-
 }

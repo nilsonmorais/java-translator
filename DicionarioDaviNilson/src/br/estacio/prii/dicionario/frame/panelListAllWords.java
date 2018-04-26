@@ -6,6 +6,7 @@
 package br.estacio.prii.dicionario.frame;
 
 import br.estacio.prii.dicionario.entidade.Dicionario;
+import br.estacio.prii.dicionario.entidade.Dicionario.Traducao;
 import br.estacio.prii.dicionario.utils.Utils;
 import static br.estacio.prii.dicionario.utils.Utils.getIconForButton;
 import static br.estacio.prii.dicionario.utils.Utils.showDialog;
@@ -16,6 +17,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import javax.swing.AbstractListModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -33,6 +35,7 @@ class panelListAllWords extends JPanel {
 
     private JScrollPane scrollPanel;
     private JList<String> list;
+    private DefaultListModel listModel = new DefaultListModel();
 
     public panelListAllWords() {
         super();
@@ -55,7 +58,8 @@ class panelListAllWords extends JPanel {
         panelContainer.setLayout(new GridBagLayout());
 
         scrollPanel = new JScrollPane();
-        list = new JList<String>();
+      
+        list = new JList(listModel);
         list.setLayoutOrientation(JList.VERTICAL);
         list.setVisibleRowCount(-1);
         list.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -63,18 +67,6 @@ class panelListAllWords extends JPanel {
 
         list.setPreferredSize(new Dimension(150, 200));
         scrollPanel.setPreferredSize(new Dimension(150, 200));
-
-       list.setModel(new AbstractListModel<String>() {
-            String[] strings = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
-
-            public int getSize() {
-                return strings.length;
-            }
-
-            public String getElementAt(int i) {
-                return strings[i];
-            }
-        });
         scrollPanel.setViewportView(list);
 
         panelContainer.add(list, Utils.createGridBagConstraints(0, 0));
@@ -85,8 +77,35 @@ class panelListAllWords extends JPanel {
         showDialog("Item excluido");
     }
 
-    void add(String item) {
-//        listModel.add(item);
+    public void add(String item) {
+        listModel.addElement(item);
     }
+
+    public void clear() {
+        listModel.clear();
+    }
+    public void refresh() {
+        
+    }
+
+//    private static class DicListModel {
+//        private ArrayList<String> dados;
+//        public DicListModel() {
+//            dados = new ArrayList<>();
+//        }
+//        public DicListModel(ArrayList list){
+//            dados = list;
+//        }
+//
+//        private void clear() {
+//            dados.clear();
+//        }
+//
+//        private void add(String item) {
+//            dados.add(item);
+//        }
+//    }
+
+    
 
 }

@@ -165,6 +165,7 @@ public class FrameDicionario extends JFrame {
 
     private void carregarDicionario() {
         ArrayList<Traducao> all = mainDicionario.getDicionario();
+        listaDicionario.clear();
         for (int i = 0; i < all.size(); i++) {
             listaDicionario.add(all.get(i).toString());
         }
@@ -179,7 +180,12 @@ public class FrameDicionario extends JFrame {
     }
 
     private void carregarDicionarioAction() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            mainDicionario.LerDados();
+            carregarDicionario();
+        } catch (Exception e) {
+            Utils.showDialog(e.getMessage());
+        }
     }
 
 }

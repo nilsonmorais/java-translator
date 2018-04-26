@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class Dicionario {
 
     private ArrayList<Traducao> TodasPalavras = new ArrayList<>();
+    private DAO mainDAO = new DAO();
 
     public void parseTraducao(String input) throws Exception {
         String[] dados;
@@ -28,8 +29,13 @@ public class Dicionario {
         return TodasPalavras;
     }
 
-    public void addTraducao(Traducao t) {
+    public void addTraducaoToDicionario(Traducao t) {
         TodasPalavras.add(t);
+        
+    }
+
+    private void limparDicionario() {
+        TodasPalavras.clear();
     }
 
     public static class Traducao {
@@ -50,6 +56,7 @@ public class Dicionario {
 
         public Traducao() {
         }
+
         public void setPalavraIngles(String palavraIngles) throws Exception {
             try {
                 Palavra p = new Palavra(palavraIngles, linguagemType.INGLES);
@@ -67,7 +74,7 @@ public class Dicionario {
                 throw new Exception(e.getMessage());
             }
         }
-        
+
         private String TraduzirPalavra(Palavra palavra, linguagemType linguagemType) {
             return "";
         }
@@ -92,7 +99,7 @@ public class Dicionario {
         public String getStringSeparator() {
             return stringSeparator;
         }
-
+        
     }
 
     public enum linguagemType {
@@ -118,11 +125,26 @@ public class Dicionario {
 
     public void GravarDados() throws Exception {
         try {
-            DAO d = new DAO();
-            d.gravarDados(this.dicToString());
+            mainDAO.gravarDados(this.dicToString());
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
+    }
+
+    public void LerDados() throws Exception {
+        try {
+            limparDicionario();
+            ArrayList<String> result = mainDAO.lerDados();
+            for (int i = 0; i < result.size(); i++) {
+                Traducao t = new Traducao();
+                String[] input = result.get(i).split(t.stringSeparator);
+                t.setPalavraIngles(input[0]);
+                t.setPalavraPortugues(input[1]);
+                addTraducaoToDicionario(t);
+            }
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        } 
     }
 
 }

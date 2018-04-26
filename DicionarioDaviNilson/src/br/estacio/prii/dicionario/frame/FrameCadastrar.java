@@ -76,7 +76,7 @@ class FrameCadastrar extends JPanel {
                 t.setPalavraIngles(sTraducao);
                 t.setPalavraPortugues(sPalavra);
             }
-            FrameDicionario.mainDicionario.addTraducao(t);
+            FrameDicionario.mainDicionario.addTraducaoToDicionario(t);
             FrameDicionario.refreshList();
             Utils.showDialog("Item Cadastrado "+t.toString());
         } catch (Exception exception) {
