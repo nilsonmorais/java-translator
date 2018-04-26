@@ -22,46 +22,39 @@
 //    OTHER DEALINGS IN THE SOFTWARE.
 //
 //    For more information, please refer to <http://unlicense.org> 
-
 package br.estacio.prii.dicionario.entidade;
 
+import br.estacio.prii.dicionario.eventos.OnChangeListener;
 import br.estacio.prii.dicionario.persistencia.DAO;
 import java.util.ArrayList;
 
 /**
  *
  */
-public class Dicionario {
+public class Dicionario implements Runnable {
 
     // Objeto único que guarda todas as traduções do app
     private final ArrayList<Traducao> Traducoes = new ArrayList<>();
-    
+
     // Objecto único que faz as chamadas ao DAO
     private final DAO mainDAO = new DAO();
+
+    private OnChangeListener ocl;
+
+    public void updateList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     public enum linguagemType {
         INGLES, PORTUGUES;
     }
-    
+
     public Dicionario() {
     }
 
     /**
-     * Cria uma entrada de tradução no dicionario tendo como entrada uma string 
-     * 
-     * @param input 
-     * @throws Exception 
-     */
-    public void parseTraducao(String input) throws Exception {
-        String[] dados;
-        Traducao t = new Traducao();
-        dados = input.split(t.getStringSeparator());
-        t.setPalavraIngles(dados[0]);
-        t.setPalavraPortugues(dados[1]);
-    }
-
-    /**
      * Retorna um ArrayList com todas as entradas do dicionario
+     *
      * @return ArrayList
      */
     public ArrayList<Traducao> getDicionario() {
@@ -70,10 +63,12 @@ public class Dicionario {
 
     /**
      * Adiciona uma traducao ao dicionario
-     * @param t 
+     *
+     * @param t
      */
     public void addTraducaoToDicionario(Traducao t) {
         Traducoes.add(t);
+        this.run();
     }
 
     /**
@@ -85,6 +80,7 @@ public class Dicionario {
 
     /**
      * Retornas as traducoes do dicionario em formato ArrayList de Strings
+     *
      * @return ArrayList
      */
     public ArrayList getDicionarioString() {
@@ -97,8 +93,9 @@ public class Dicionario {
     }
 
     /**
-     * Grava o dicionario 
-     * @throws Exception 
+     * Grava o dicionario em disco usando a classe DAO
+     *
+     * @throws Exception
      */
     public void GravarDados() throws Exception {
         try {
@@ -110,9 +107,10 @@ public class Dicionario {
 
     /**
      * Carrega traducoes no dicionario pelo arquivo do disco
-     * @throws Exception 
+     *
+     * @throws Exception
      */
-    public void LerDados() throws Exception {
+    public void CarregarDados() throws Exception {
         try {
             limparDicionario();
             ArrayList<String> result = mainDAO.lerDados();
@@ -126,6 +124,13 @@ public class Dicionario {
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
+    }
+    @Override
+    public void run() {
+        ocl.OnChange();
+    }
+    public void addOnChangeListener(OnChangeListener ocl) {
+        this.ocl = ocl;
     }
 
 }

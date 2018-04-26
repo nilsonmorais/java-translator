@@ -35,16 +35,13 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 /**
- *
- * @author aluno
+ * Frame Dicionario é o frame principal da Aplicacao
  */
 public class FrameDicionario extends JFrame {
 
     final static String APPTITLE = "Dicionário";
 
-    public static void refreshList() {
-//        listaDicionario
-    }
+   
     private final CardLayoutDicionario cardLayoutDicionario = new CardLayoutDicionario();
     final static String ABOUTTEXT = "Trabalho de Programação II.\n"
             + "Tradutor Inglês/Português.\n"
@@ -56,8 +53,11 @@ public class FrameDicionario extends JFrame {
 
     public FrameDicionario() throws HeadlessException {
         super();
+        mainDicionario.addOnChangeListener(() -> {
+            PopularLista();
+        });
         initFrame();
-        carregarDicionario();
+        PopularLista();
     }
 
     private void initFrame() {
@@ -187,7 +187,10 @@ public class FrameDicionario extends JFrame {
         JOptionPane.showMessageDialog(null, ABOUTTEXT);
     }
 
-    private void carregarDicionario() {
+    /**
+     * Carrega um ArrayList com Traducoes do dicionario e adiciona a JList
+     */
+    public void PopularLista() {
         ArrayList<Traducao> all = mainDicionario.getDicionario();
         listaDicionario.clear();
         for (int i = 0; i < all.size(); i++) {
@@ -195,6 +198,9 @@ public class FrameDicionario extends JFrame {
         }
     }
 
+    /**
+     * Aciona gravacao do Dicionario
+     */
     private void salvarDicionarioAction() {
         try {
             mainDicionario.GravarDados();
@@ -203,13 +209,17 @@ public class FrameDicionario extends JFrame {
         }
     }
 
+    /**
+     * Faz o dicionario carregar os dados 
+     */
     private void carregarDicionarioAction() {
         try {
-            mainDicionario.LerDados();
-            carregarDicionario();
+            // Carrega traducoes no objeto Dicionario
+            mainDicionario.CarregarDados();
+
+            PopularLista();
         } catch (Exception e) {
             Utils.showDialog(e.getMessage());
         }
     }
-
 }

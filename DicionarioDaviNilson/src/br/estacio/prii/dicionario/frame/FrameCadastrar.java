@@ -22,10 +22,8 @@
 //    OTHER DEALINGS IN THE SOFTWARE.
 //
 //    For more information, please refer to <http://unlicense.org> 
-
 package br.estacio.prii.dicionario.frame;
 
-import br.estacio.prii.dicionario.entidade.Dicionario;
 import br.estacio.prii.dicionario.entidade.Traducao;
 import br.estacio.prii.dicionario.utils.Utils;
 import static br.estacio.prii.dicionario.utils.Utils.getIconForButton;
@@ -40,8 +38,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 /**
- *
- * @author 97836834387
+ * Frame Cadastrar
  */
 class FrameCadastrar extends JPanel {
 
@@ -75,17 +72,13 @@ class FrameCadastrar extends JPanel {
         JButton btnCadastrar = new JButton("Cadastrar");
         btnCadastrar.setIcon(getIconForButton("Save24.gif"));
         btnCadastrar.addActionListener((ActionEvent e) -> {
-            try {
-                cadastrarItem();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            cadastrarItemAction();
         });
 
         this.add(btnCadastrar, Utils.createGridBagConstraints(0, 2, Utils.pad20, null));
     }
 
-    private void cadastrarItem() {
+    private void cadastrarItemAction() {
         try {
             String sPalavra = textPalavra.getText();
             String sTraducao = textTraducao.getText();
@@ -98,8 +91,7 @@ class FrameCadastrar extends JPanel {
                 t.setPalavraPortugues(sPalavra);
             }
             FrameDicionario.mainDicionario.addTraducaoToDicionario(t);
-            FrameDicionario.refreshList();
-            Utils.showDialog("Item Cadastrado "+t.toString());
+            Utils.showDialog("Item Cadastrado " + t.toString());
         } catch (Exception exception) {
             showDialog(exception.getMessage());
         }
