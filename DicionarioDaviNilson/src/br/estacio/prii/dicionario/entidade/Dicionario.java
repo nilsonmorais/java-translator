@@ -1,8 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//    This is free and unencumbered software released into the public domain.
+//
+//    Anyone is free to copy, modify, publish, use, compile, sell, or
+//    distribute this software, either in source code form or as a compiled
+//    binary, for any purpose, commercial or non-commercial, and by any
+//    means.
+//
+//    In jurisdictions that recognize copyright laws, the author or authors
+//    of this software dedicate any and all copyright interest in the
+//    software to the public domain. We make this dedication for the benefit
+//    of the public at large and to the detriment of our heirs and
+//    successors. We intend this dedication to be an overt act of
+//    relinquishment in perpetuity of all present and future rights to this
+//    software under copyright law.
+//
+//    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+//    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+//    IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+//    OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+//    ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//    OTHER DEALINGS IN THE SOFTWARE.
+//
+//    For more information, please refer to <http://unlicense.org> 
+
 package br.estacio.prii.dicionario.entidade;
 
 import br.estacio.prii.dicionario.persistencia.DAO;
@@ -10,13 +30,28 @@ import java.util.ArrayList;
 
 /**
  *
- * @author aluno
  */
 public class Dicionario {
 
-    private ArrayList<Traducao> TodasPalavras = new ArrayList<>();
-    private DAO mainDAO = new DAO();
+    // Objeto único que guarda todas as traduções do app
+    private final ArrayList<Traducao> Traducoes = new ArrayList<>();
+    
+    // Objecto único que faz as chamadas ao DAO
+    private final DAO mainDAO = new DAO();
 
+    public enum linguagemType {
+        INGLES, PORTUGUES;
+    }
+    
+    public Dicionario() {
+    }
+
+    /**
+     * Cria uma entrada de tradução no dicionario tendo como entrada uma string 
+     * 
+     * @param input 
+     * @throws Exception 
+     */
     public void parseTraducao(String input) throws Exception {
         String[] dados;
         Traducao t = new Traducao();
@@ -25,126 +60,72 @@ public class Dicionario {
         t.setPalavraPortugues(dados[1]);
     }
 
+    /**
+     * Retorna um ArrayList com todas as entradas do dicionario
+     * @return ArrayList
+     */
     public ArrayList<Traducao> getDicionario() {
-        return TodasPalavras;
+        return Traducoes;
     }
 
+    /**
+     * Adiciona uma traducao ao dicionario
+     * @param t 
+     */
     public void addTraducaoToDicionario(Traducao t) {
-        TodasPalavras.add(t);
-        
+        Traducoes.add(t);
     }
 
+    /**
+     * Limpa todas as traducoes do dicionario.
+     */
     private void limparDicionario() {
-        TodasPalavras.clear();
+        Traducoes.clear();
     }
 
-    public static class Traducao {
-
-        private Palavra palavraPortugues;
-        private Palavra palavraIngles;
-        private final String stringSeparator = ";";
-
-        private Traducao(String palavra, linguagemType lingua) throws Exception {
-            if (lingua.equals(linguagemType.INGLES)) {
-                setPalavraIngles(palavra);
-                setPalavraPortugues(TraduzirPalavra(getPalavraIngles(), linguagemType.PORTUGUES));
-            } else {
-                setPalavraPortugues(palavra);
-                setPalavraIngles(TraduzirPalavra(getPalavraPortugues(), linguagemType.INGLES));
-            }
-        }
-
-        public Traducao() {
-        }
-
-        public void setPalavraIngles(String palavraIngles) throws Exception {
-            try {
-                Palavra p = new Palavra(palavraIngles, linguagemType.INGLES);
-                this.palavraIngles = p;
-            } catch (Exception e) {
-                throw new Exception(e.getMessage());
-            }
-        }
-
-        public void setPalavraPortugues(String palavraPortugues) throws Exception {
-            try {
-                Palavra p = new Palavra(palavraPortugues, linguagemType.PORTUGUES);
-                this.palavraPortugues = p;
-            } catch (Exception e) {
-                throw new Exception(e.getMessage());
-            }
-        }
-
-        private String TraduzirPalavra(Palavra palavra, linguagemType linguagemType) {
-            return "";
-        }
-
-        public Palavra getPalavraIngles() {
-            return palavraIngles;
-        }
-
-        public Palavra getPalavraPortugues() {
-            return palavraPortugues;
-        }
-
-        @Override
-        public String toString() {
-            StringBuilder sb = new StringBuilder();
-            sb.append(this.getPalavraIngles().toString());
-            sb.append(this.stringSeparator);
-            sb.append(this.getPalavraPortugues().toString());
-            return sb.toString();
-        }
-
-        public String getStringSeparator() {
-            return stringSeparator;
-        }
-        
-    }
-
-    public enum linguagemType {
-        INGLES, PORTUGUES;
-    }
-
-    public Dicionario() {
-
-    }
-
-    public void CriarTraducao(Palavra nova, linguagemType lingua) {
-
-    }
-
-    public ArrayList dicToString() {
+    /**
+     * Retornas as traducoes do dicionario em formato ArrayList de Strings
+     * @return ArrayList
+     */
+    public ArrayList getDicionarioString() {
         ArrayList<String> result = new ArrayList<>();
 
-        for (Traducao p : TodasPalavras) {
+        for (Traducao p : Traducoes) {
             result.add(p.toString());
         }
         return result;
     }
 
+    /**
+     * Grava o dicionario 
+     * @throws Exception 
+     */
     public void GravarDados() throws Exception {
         try {
-            mainDAO.gravarDados(this.dicToString());
+            mainDAO.gravarDados(this.getDicionarioString());
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
     }
 
+    /**
+     * Carrega traducoes no dicionario pelo arquivo do disco
+     * @throws Exception 
+     */
     public void LerDados() throws Exception {
         try {
             limparDicionario();
             ArrayList<String> result = mainDAO.lerDados();
             for (int i = 0; i < result.size(); i++) {
                 Traducao t = new Traducao();
-                String[] input = result.get(i).split(t.stringSeparator);
+                String[] input = result.get(i).split(t.getStringSeparator());
                 t.setPalavraIngles(input[0]);
                 t.setPalavraPortugues(input[1]);
                 addTraducaoToDicionario(t);
             }
         } catch (Exception e) {
             throw new Exception(e.getMessage());
-        } 
+        }
     }
 
 }
