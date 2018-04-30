@@ -41,10 +41,6 @@ public class Dicionario implements Runnable {
 
     private OnChangeListener ocl;
 
-    public void updateList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     public enum linguagemType {
         INGLES, PORTUGUES;
     }
@@ -65,10 +61,16 @@ public class Dicionario implements Runnable {
      * Adiciona uma traducao ao dicionario
      *
      * @param t
+     * @throws java.lang.Exception
      */
-    public void addTraducaoToDicionario(Traducao t) {
-        Traducoes.add(t);
-        this.run();
+    public void addTraducaoToDicionario(Traducao t) throws Exception {
+        try {
+            Traducoes.add(t);
+            this.run();
+            GravarDados();
+        } catch (Exception exception) {
+            throw new Exception(exception.getMessage());
+        }
     }
 
     /**

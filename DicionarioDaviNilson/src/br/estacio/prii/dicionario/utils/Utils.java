@@ -65,6 +65,11 @@ public class Utils {
     
     private static GridBagConstraints _createGridBagConstraints(int x, int y, java.awt.Insets ins, Integer fill) {
         GridBagConstraints c = new GridBagConstraints();
+        c.anchor = GridBagConstraints.CENTER;
+        c.weightx = 1;
+        c.weighty = 1;
+        c.gridheight =1;
+        c.gridwidth =1;
         c.gridx = x;
         c.gridy = y;
         c.insets = ins == null ? new Insets(0, 0, 0, 0) : ins;

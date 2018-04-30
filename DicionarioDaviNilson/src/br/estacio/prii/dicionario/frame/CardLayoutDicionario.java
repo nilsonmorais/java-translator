@@ -43,7 +43,6 @@ public class CardLayoutDicionario extends JPanel {
     private final JComboBox comboSelect;
     
     public CardLayoutDicionario() {
-        super();
         JPanel comboBoxPane = new JPanel();
         comboBoxPane.setLayout(new GridBagLayout());
         this.setLayout(new GridBagLayout());
@@ -58,8 +57,11 @@ public class CardLayoutDicionario extends JPanel {
             cl.show(cards, (String) e.getItem());
         });
 
-        comboBoxPane.add(labelSelectMode, Utils.createGridBagConstraints(0, 0, Utils.pad10, null));
-        comboBoxPane.add(comboSelect, Utils.createGridBagConstraints(1, 0));
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx=0;c.gridy=0;c.insets = Utils.pad10;
+        comboBoxPane.add(labelSelectMode, c);
+        c.gridx=1;c.gridy=0;c.insets = Utils.pad10;
+        comboBoxPane.add(comboSelect, c);
 
         //Create the "cards".
         JPanel cardCadastrar = new FrameCadastrar();
@@ -74,12 +76,19 @@ public class CardLayoutDicionario extends JPanel {
         this.add(cards, Utils.createGridBagConstraints(0, 1, Utils.pad10, null));
         
     }
+    /**
+     * Muda o card pelo parametro passado.
+     * @param type Tipo do card
+     */
     public void changeLayoutEvent(String type){
         CardLayout cl = (CardLayout) (cards.getLayout());
         cl.show(cards, type);
         comboSelect.setSelectedItem(type);
     }
 
+    /**
+     * Alterna entre os cards.
+     */
     public void toggleLayoutEvent() {
         String selected = comboSelect.getSelectedItem().toString();
         if (selected.equals(ACTION1TEXT)) {

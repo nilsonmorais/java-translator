@@ -22,12 +22,12 @@
 //    OTHER DEALINGS IN THE SOFTWARE.
 //
 //    For more information, please refer to <http://unlicense.org> 
-
 package br.estacio.prii.dicionario.frame;
 
+import br.estacio.prii.dicionario.eventos.OnChangeListener;
 import br.estacio.prii.dicionario.utils.Utils;
 import static br.estacio.prii.dicionario.utils.Utils.getIconForButton;
-import static br.estacio.prii.dicionario.utils.Utils.showDialog;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -44,81 +44,81 @@ import javax.swing.ListSelectionModel;
  *
  * @author 97836834387
  */
-class panelListAllWords extends JPanel {
+class PanelListWords extends JPanel  {
 
     private JScrollPane scrollPanel;
     private JList<String> list;
-    private DefaultListModel listModel = new DefaultListModel();
+    private final DefaultListModel listModel = new DefaultListModel();
+    private JLabel labelCount = new JLabel();
 
-    public panelListAllWords() {
-        super();
-        this.setBorder(javax.swing.BorderFactory.createTitledBorder("Dicionário"));
-        this.setLayout(new GridBagLayout());
+    public PanelListWords() {
+        setBorder(javax.swing.BorderFactory.createTitledBorder("Dicionário"));
+        setLayout(new GridBagLayout());
+        setPreferredSize(new java.awt.Dimension(400,200));
 
         JButton btnExcluir = new JButton("Excluir");
         btnExcluir.setIcon(getIconForButton("Delete24.gif"));
         btnExcluir.addActionListener((ActionEvent e) -> {
-            excluirItem();
+            excluirItemAction();
         });
 
-        this.add(CreateListAllWords(), Utils.createGridBagConstraints(0, 0, Utils.pad20, null));
-        this.add(btnExcluir, Utils.createGridBagConstraints(1, 0));
-        this.add(new JLabel("Total de Palavras: 10"), Utils.createGridBagConstraints(0, 1, Utils.pad10, GridBagConstraints.HORIZONTAL));
+        GridBagConstraints c = new GridBagConstraints();
+        
+        c.gridx=0;c.gridy=0;c.anchor = GridBagConstraints.LINE_START;
+        this.add(CreateListAllWords(), c);
+        
+        c.gridx=1;c.gridy=0;c.anchor = GridBagConstraints.PAGE_START;
+        this.add(btnExcluir, c);
+        
+        c.gridx=2;c.gridy=0;c.anchor = GridBagConstraints.PAGE_END;
+        this.add(labelCount, c);
+        
     }
 
     private JPanel CreateListAllWords() {
         JPanel panelContainer = new JPanel();
         panelContainer.setLayout(new GridBagLayout());
+        panelContainer.setPreferredSize(new java.awt.Dimension(200,150));
 
-        scrollPanel = new JScrollPane();
-      
+        
         list = new JList(listModel);
         list.setLayoutOrientation(JList.VERTICAL);
-        list.setVisibleRowCount(-1);
         list.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Selecionar somente um item
+        list.setPrototypeCellValue("XXXXXXXXXXXXXXXXXXXX");
+        list.setPreferredSize(new java.awt.Dimension(200,150));
 
-        list.setPreferredSize(new Dimension(150, 200));
-        scrollPanel.setPreferredSize(new Dimension(150, 200));
+        scrollPanel = new JScrollPane(list);
+        scrollPanel.setSize(new Dimension(200, 150));
         scrollPanel.setViewportView(list);
 
-        panelContainer.add(list, Utils.createGridBagConstraints(0, 0));
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx=0;c.gridy=0;c.anchor=GridBagConstraints.LINE_START;c.fill = GridBagConstraints.BOTH;
+        panelContainer.add(list, c);
+        
         return panelContainer;
     }
 
-    private void excluirItem() {
-        showDialog("Item excluido");
+    private void excluirItemAction() {
+        int s = list.getSelectedIndex();
+        listModel.remove(s);
+        updateCounter();
     }
 
     public void add(String item) {
         listModel.addElement(item);
+        updateCounter();
     }
 
     public void clear() {
         listModel.clear();
     }
-    public void refresh() {
-        
+
+    private void updateCounter() {
+        StringBuilder result = new StringBuilder("Total de Palavras: ");
+        result.append(listModel.getSize());
+        labelCount.setText((String) result.toString());
     }
 
-//    private static class DicListModel {
-//        private ArrayList<String> dados;
-//        public DicListModel() {
-//            dados = new ArrayList<>();
-//        }
-//        public DicListModel(ArrayList list){
-//            dados = list;
-//        }
-//
-//        private void clear() {
-//            dados.clear();
-//        }
-//
-//        private void add(String item) {
-//            dados.add(item);
-//        }
-//    }
-
-    
 
 }

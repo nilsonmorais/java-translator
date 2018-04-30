@@ -22,7 +22,6 @@
 //    OTHER DEALINGS IN THE SOFTWARE.
 //
 //    For more information, please refer to <http://unlicense.org> 
-
 package br.estacio.prii.dicionario.frame;
 
 import br.estacio.prii.dicionario.entidade.Dicionario;
@@ -41,23 +40,26 @@ public class FrameDicionario extends JFrame {
 
     final static String APPTITLE = "Dicionário";
 
-   
     private final CardLayoutDicionario cardLayoutDicionario = new CardLayoutDicionario();
     final static String ABOUTTEXT = "Trabalho de Programação II.\n"
             + "Tradutor Inglês/Português.\n"
             + "Equipe:\n"
             + "Davi Morais (201703123451)\n"
             + "Nilson Morais (201007055561)\n";
-    private panelListAllWords listaDicionario = new panelListAllWords();
+    private final PanelListWords listaDicionario = new PanelListWords();
     public static Dicionario mainDicionario = new Dicionario();
 
     public FrameDicionario() throws HeadlessException {
         super();
+
+        // Cria um listener para atualizar a lista sempre que houver mudanças no
+        // Objeto Dicionario
         mainDicionario.addOnChangeListener(() -> {
             PopularLista();
         });
+
         initFrame();
-        PopularLista();
+        carregarDicionarioAction();
     }
 
     private void initFrame() {
@@ -144,7 +146,7 @@ public class FrameDicionario extends JFrame {
     }
 
     private JToolBar createToolbar() {
-        final JToolBar toolBar = new JToolBar();
+        final JToolBar toolBar = new JToolBar("Toolbar",JToolBar.HORIZONTAL);
         toolBar.setBorderPainted(false);
         toolBar.setFloatable(false);
 
@@ -161,7 +163,6 @@ public class FrameDicionario extends JFrame {
         btnChange.addActionListener(btnChangeAction);
 
         toolBar.add(btnChange);
-        toolBar.addSeparator(new Dimension(2, 0));
         toolBar.add(btnAbout);
 
         return toolBar;
@@ -171,15 +172,21 @@ public class FrameDicionario extends JFrame {
         setTitle(APPTITLE); // título do Frame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false); // não permite o redimensionamento
+        setLocationRelativeTo(null);
     }
 
     private void addComponents() {
         Container pane = this.getContentPane();
 
         pane.setLayout(new GridBagLayout());
-        pane.add(createToolbar(), Utils.createGridBagConstraints(0, 0, null, null));
-        pane.add(cardLayoutDicionario, Utils.createGridBagConstraints(0, 1, null, null));
-        pane.add(listaDicionario, Utils.createGridBagConstraints(0, 2, Utils.pad10, null));
+        GridBagConstraints c = new GridBagConstraints();
+        
+        c.gridx = 0;c.gridy = 0;c.fill = GridBagConstraints.HORIZONTAL;c.weightx=1;c.weighty=1;c.anchor=GridBagConstraints.PAGE_START;
+        pane.add(createToolbar(),c);
+        c.gridx = 0;c.gridy = 1;c.anchor = GridBagConstraints.CENTER;
+        pane.add(cardLayoutDicionario,c);
+        c.gridx = 0;c.gridy = 2;c.anchor = GridBagConstraints.PAGE_END;c.insets = Utils.pad10;
+        pane.add(listaDicionario,c);
         pack();
     }
 
@@ -210,13 +217,12 @@ public class FrameDicionario extends JFrame {
     }
 
     /**
-     * Faz o dicionario carregar os dados 
+     * Faz o dicionario carregar os dados
      */
     private void carregarDicionarioAction() {
         try {
             // Carrega traducoes no objeto Dicionario
             mainDicionario.CarregarDados();
-
             PopularLista();
         } catch (Exception e) {
             Utils.showDialog(e.getMessage());
