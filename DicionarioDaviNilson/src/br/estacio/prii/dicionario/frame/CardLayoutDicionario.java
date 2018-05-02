@@ -31,8 +31,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- *
- * @author aluno
+ * Panel que contem um CardLayoutDicionario 
  */
 public class CardLayoutDicionario extends JPanel {
 
@@ -72,8 +71,11 @@ public class CardLayoutDicionario extends JPanel {
         cards.add(cardCadastrar, ACTION1TEXT);
         cards.add(cardTraduzir, ACTION2TEXT);
 
-        this.add(comboBoxPane, Utils.createGridBagConstraints(0, 0, Utils.pad10, null));
-        this.add(cards, Utils.createGridBagConstraints(0, 1, Utils.pad10, null));
+        
+        c.gridx=0;c.gridy=0;c.insets = Utils.pad10;
+        this.add(comboBoxPane, c);
+        c.gridx=0;c.gridy=1;c.insets = Utils.pad10;
+        this.add(cards, c);
         
     }
     /**

@@ -22,9 +22,15 @@
 //    OTHER DEALINGS IN THE SOFTWARE.
 //
 //    For more information, please refer to <http://unlicense.org> 
-package br.estacio.prii.dicionario.eventos;
+package br.estacio.prii.dicionario.entidade;
 
-public interface OnChangeListener  {
-    public void OnChange();
+/**
+ *
+ */
+public class TraducaoException extends Exception {
+
+    public TraducaoException(String text) {
+        super(text);
+    }
+    
 }
-

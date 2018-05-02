@@ -29,7 +29,9 @@ import br.estacio.prii.dicionario.persistencia.DAO;
 import java.util.ArrayList;
 
 /**
- *
+ * Classe Dicionario é um objeto abstrato que armazena em memoria todas as traducoes do 
+ * dicionario, provê acesso ao dicionario a interface grafica e aciona a classe DAO
+ * para executar processos em disco.
  */
 public class Dicionario implements Runnable {
 
@@ -127,10 +129,35 @@ public class Dicionario implements Runnable {
             throw new Exception(e.getMessage());
         }
     }
+
+    /**
+     * Traduz uma palavra
+     * @param text Texto a ser traduzido
+     * @param linguagemType 
+     * @return Palavra traduzida
+     * @throws TraducaoException 
+     */
+    public String traduzirPalavra(String text, linguagemType linguagemType) throws TraducaoException {
+        for (Traducao p : Traducoes) {
+            if (linguagemType == linguagemType.INGLES){
+                if (p.getPalavraInglesString().equals(text.toUpperCase())){
+                    return p.getPalavraPortuguesString();
+                }
+            } 
+            if (linguagemType == linguagemType.PORTUGUES){
+                if (p.getPalavraPortuguesString().equals(text.toUpperCase())){
+                    return p.getPalavraInglesString();
+                }
+            } 
+        }
+        throw new TraducaoException("Palavra não encontrada.");
+    }
+
     @Override
     public void run() {
         ocl.OnChange();
     }
+
     public void addOnChangeListener(OnChangeListener ocl) {
         this.ocl = ocl;
     }

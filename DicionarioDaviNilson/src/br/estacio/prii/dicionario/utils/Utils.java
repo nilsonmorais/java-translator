@@ -25,7 +25,6 @@
 
 package br.estacio.prii.dicionario.utils;
 
-import br.estacio.prii.dicionario.frame.FrameDicionario;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -37,45 +36,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author 97836834387
+ * Alguns métodos utilitários.
  */
 public class Utils {
-
-    /**
-     *
-     * @param x     Specify the row from left to right starting from zero. 
-     * @param y     Specify the column from top to bottom starting from zero. 
-     * @param ins   External padding of the component.(Top, Left, Bottom, Right)
-     * @param fill  How to resize the component. The values for fill property are: NONE, VERTICAL, HORIZONTAL, VERTICAL and BOTH.
-     * @return
-     */
-    public static GridBagConstraints createGridBagConstraints(int x, int y, java.awt.Insets ins, Integer fill) {
-        return _createGridBagConstraints(x, y, ins, fill);
-    }
-    /**
-     *
-     * @param x     Specify the row from left to right starting from zero. 
-     * @param y     Specify the column from top to bottom starting from zero. 
-     * @return
-     */
-    public static GridBagConstraints createGridBagConstraints(int x, int y) {
-        return _createGridBagConstraints(x, y, null, null);
-    }
-    
-    private static GridBagConstraints _createGridBagConstraints(int x, int y, java.awt.Insets ins, Integer fill) {
-        GridBagConstraints c = new GridBagConstraints();
-        c.anchor = GridBagConstraints.CENTER;
-        c.weightx = 1;
-        c.weighty = 1;
-        c.gridheight =1;
-        c.gridwidth =1;
-        c.gridx = x;
-        c.gridy = y;
-        c.insets = ins == null ? new Insets(0, 0, 0, 0) : ins;
-        c.fill = fill == null ? GridBagConstraints.HORIZONTAL : fill;
-        return c;
-    }
 
     public static Dimension getWindowDimensions() {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();

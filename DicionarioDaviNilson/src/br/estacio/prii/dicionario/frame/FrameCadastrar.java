@@ -39,7 +39,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 /**
- * Frame Cadastrar
+ * Panel Cadastrar
  */
 class FrameCadastrar extends JPanel {
 
@@ -53,7 +53,7 @@ class FrameCadastrar extends JPanel {
     public FrameCadastrar() {
         setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastrar"));
         setLayout(new GridBagLayout());
-        setPreferredSize(new java.awt.Dimension(400,200));
+        setPreferredSize(new java.awt.Dimension(400, 200));
 
         ButtonGroup radioGroup = new ButtonGroup();
         radioIngles.setSelected(true);
@@ -61,20 +61,36 @@ class FrameCadastrar extends JPanel {
         radioGroup.add(radioPortugues);
 
         GridBagConstraints c = new GridBagConstraints();
-        
-        c.gridx=0;c.gridy=0;c.insets = Utils.pad10;c.anchor = GridBagConstraints.LINE_START;
+
+        c.gridx = 0;
+        c.gridy = 0;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 1;
+        c.weighty = 1;
+        c.insets = Utils.pad10;
+        c.anchor = GridBagConstraints.LINE_START;
         add(radioIngles, c);
-        c.gridx=1;c.gridy=0;c.insets = Utils.pad10;
+        c.gridx = 1;
+        c.gridy = 0;
+        c.insets = Utils.pad10;
         add(radioPortugues, c);
 
-        c.gridx=0;c.gridy=1;c.insets = Utils.pad10;
+        c.gridx = 0;
+        c.gridy = 1;
+        c.insets = Utils.pad10;
         add(new JLabel("Palavra:"), c);
-        c.gridx=1;c.gridy=1;c.insets = Utils.pad10;
+        c.gridx = 1;
+        c.gridy = 1;
+        c.insets = Utils.pad10;
         add(textPalavra, c);
 
-        c.gridx=0;c.gridy=2;c.insets = Utils.pad10;
+        c.gridx = 0;
+        c.gridy = 2;
+        c.insets = Utils.pad10;
         add(new JLabel("Tradução:"), c);
-        c.gridx=1;c.gridy=2;c.insets = Utils.pad10;
+        c.gridx = 1;
+        c.gridy = 2;
+        c.insets = Utils.pad10;
         add(textTraducao, c);
 
         JButton btnCadastrar = new JButton("Cadastrar");
@@ -83,7 +99,10 @@ class FrameCadastrar extends JPanel {
             cadastrarItemAction();
         });
 
-        c.gridx=0;c.gridy=3;c.insets = Utils.pad10;c.anchor = GridBagConstraints.PAGE_END;
+        c.gridx = 0;
+        c.gridy = 3;
+        c.insets = Utils.pad10;
+        c.anchor = GridBagConstraints.PAGE_END;
         add(btnCadastrar, c);
     }
 

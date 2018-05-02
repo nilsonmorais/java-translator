@@ -30,7 +30,6 @@ import br.estacio.prii.dicionario.utils.Utils;
 
 
 /**
- *
  * @author Nilson Morais / Davi Morais
  */
 public class DicionarioInglesPortugues {

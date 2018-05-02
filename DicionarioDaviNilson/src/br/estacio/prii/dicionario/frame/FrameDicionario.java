@@ -46,7 +46,7 @@ public class FrameDicionario extends JFrame {
             + "Equipe:\n"
             + "Davi Morais (201703123451)\n"
             + "Nilson Morais (201007055561)\n";
-    private final PanelListWords listaDicionario = new PanelListWords();
+    private final FrameListaPalavras listaDicionario = new FrameListaPalavras();
     public static Dicionario mainDicionario = new Dicionario();
 
     public FrameDicionario() throws HeadlessException {
@@ -117,15 +117,6 @@ public class FrameDicionario extends JFrame {
         traduzirMenuItem.addActionListener((ActionEvent e) -> {
             cardLayoutDicionario.changeLayoutEvent(traduzirMenuItem.getActionCommand());
         });
-
-        //EventListener
-        MenuItemListener menuItemListener = new MenuItemListener();
-        sobreMenuItem.addActionListener(menuItemListener);
-        sairMenuItem.addActionListener(menuItemListener);
-        salvarMenuItem.addActionListener(menuItemListener);
-        carregarMenuItem.addActionListener(menuItemListener);
-        cadastrarMenuItem.addActionListener(menuItemListener);
-        traduzirMenuItem.addActionListener(menuItemListener);
 
         //Adicionar filhos
         fileMenu.add(sobreMenuItem);

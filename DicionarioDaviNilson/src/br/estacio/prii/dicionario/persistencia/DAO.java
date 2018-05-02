@@ -30,7 +30,6 @@ import java.util.ArrayList;
 
 /**
  * Classe DAO para acesso ao filesystem. Comunicação feita só via ArrayLyst
- *
  */
 public class DAO {
 

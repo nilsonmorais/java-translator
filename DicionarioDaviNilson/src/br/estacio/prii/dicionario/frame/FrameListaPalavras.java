@@ -24,14 +24,13 @@
 //    For more information, please refer to <http://unlicense.org> 
 package br.estacio.prii.dicionario.frame;
 
-import br.estacio.prii.dicionario.eventos.OnChangeListener;
 import br.estacio.prii.dicionario.utils.Utils;
 import static br.estacio.prii.dicionario.utils.Utils.getIconForButton;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import javax.rmi.CORBA.Util;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -41,20 +40,19 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 /**
- *
- * @author 97836834387
+ * Panel que contem a lista de palavras e o botao excluir
  */
-class PanelListWords extends JPanel  {
+class FrameListaPalavras extends JPanel {
 
     private JScrollPane scrollPanel;
     private JList<String> list;
     private final DefaultListModel listModel = new DefaultListModel();
     private JLabel labelCount = new JLabel();
 
-    public PanelListWords() {
+    public FrameListaPalavras() {
         setBorder(javax.swing.BorderFactory.createTitledBorder("Dicionário"));
         setLayout(new GridBagLayout());
-        setPreferredSize(new java.awt.Dimension(400,200));
+        setPreferredSize(new java.awt.Dimension(400, 200));
 
         JButton btnExcluir = new JButton("Excluir");
         btnExcluir.setIcon(getIconForButton("Delete24.gif"));
@@ -63,40 +61,45 @@ class PanelListWords extends JPanel  {
         });
 
         GridBagConstraints c = new GridBagConstraints();
-        
-        c.gridx=0;c.gridy=0;c.anchor = GridBagConstraints.LINE_START;
+
+        c.gridx = 0;
+        c.gridy = 0;
+        c.anchor = GridBagConstraints.LINE_START;
+        c.weightx = 0;
+        c.weighty = 0;
+        c.insets = Utils.pad10;
+        c.fill = GridBagConstraints.NONE;
         this.add(CreateListAllWords(), c);
-        
-        c.gridx=1;c.gridy=0;c.anchor = GridBagConstraints.PAGE_START;
+
+        c.gridx = 1;
+        c.gridy = 0;
+        c.anchor = GridBagConstraints.PAGE_START;
         this.add(btnExcluir, c);
-        
-        c.gridx=2;c.gridy=0;c.anchor = GridBagConstraints.PAGE_END;
+
+        c.gridx = 0;
+        c.gridy = 1;
+        c.anchor = GridBagConstraints.LINE_START;
         this.add(labelCount, c);
         
     }
 
-    private JPanel CreateListAllWords() {
-        JPanel panelContainer = new JPanel();
-        panelContainer.setLayout(new GridBagLayout());
-        panelContainer.setPreferredSize(new java.awt.Dimension(200,150));
-
-        
+    private JList<String> CreateListAllWords() {
         list = new JList(listModel);
         list.setLayoutOrientation(JList.VERTICAL);
         list.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Selecionar somente um item
         list.setPrototypeCellValue("XXXXXXXXXXXXXXXXXXXX");
-        list.setPreferredSize(new java.awt.Dimension(200,150));
-
-        scrollPanel = new JScrollPane(list);
-        scrollPanel.setSize(new Dimension(200, 150));
-        scrollPanel.setViewportView(list);
+        list.setPreferredSize(new java.awt.Dimension(200, 150));
 
         GridBagConstraints c = new GridBagConstraints();
-        c.gridx=0;c.gridy=0;c.anchor=GridBagConstraints.LINE_START;c.fill = GridBagConstraints.BOTH;
-        panelContainer.add(list, c);
-        
-        return panelContainer;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.anchor = GridBagConstraints.PAGE_START;
+        c.weightx = 1;
+        c.weighty = 1;
+        c.fill = GridBagConstraints.BOTH;
+
+        return list;
     }
 
     private void excluirItemAction() {
@@ -119,6 +122,5 @@ class PanelListWords extends JPanel  {
         result.append(listModel.getSize());
         labelCount.setText((String) result.toString());
     }
-
 
 }

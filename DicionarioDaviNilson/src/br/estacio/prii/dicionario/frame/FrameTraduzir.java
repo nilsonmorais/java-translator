@@ -22,78 +22,107 @@
 //    OTHER DEALINGS IN THE SOFTWARE.
 //
 //    For more information, please refer to <http://unlicense.org> 
-
 package br.estacio.prii.dicionario.frame;
 
+import br.estacio.prii.dicionario.entidade.Dicionario;
+import br.estacio.prii.dicionario.entidade.TraducaoException;
 import br.estacio.prii.dicionario.utils.Utils;
 import static br.estacio.prii.dicionario.utils.Utils.getIconForButton;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 /**
- *
- * @author 97836834387
+ * Panel que contem os componentes graficos para tradução
  */
 class FrameTraduzir extends JPanel {
-        ButtonGroup radioGroup = new ButtonGroup();
-        JRadioButton radioIngles = new JRadioButton("Inglês");
-        JRadioButton radioPortugues = new JRadioButton("Português");
-        
-        JTextField textPalavra = new JTextField("",15);
-        JLabel textTraducao = new JLabel("");
+
+    ButtonGroup radioGroup = new ButtonGroup();
+    JRadioButton radioIngles = new JRadioButton("Inglês");
+    JRadioButton radioPortugues = new JRadioButton("Português");
+    JLabel labelResultado = new JLabel(" ");
+    JTextField textPalavra = new JTextField("", 25);
 
     public FrameTraduzir() {
-        super();
         this.setBorder(javax.swing.BorderFactory.createTitledBorder("Traduzir"));
         this.setLayout(new GridBagLayout());
-        
+        setPreferredSize(new java.awt.Dimension(400, 200));
+
         radioIngles.setSelected(true);
         radioGroup.add(radioIngles);
         radioGroup.add(radioPortugues);
-        
-        this.add(new JLabel("Palavra:"), Utils.createGridBagConstraints(0, 0, Utils.pad10, null));
-        this.add(textPalavra, Utils.createGridBagConstraints(1, 0));
-        
 
-        this.add(new JLabel("Traduzir para:"), Utils.createGridBagConstraints(0, 1, Utils.pad10, null));
-        this.add(radioIngles, Utils.createGridBagConstraints(1, 1));
-        this.add(radioPortugues, Utils.createGridBagConstraints(2, 1));
+        GridBagConstraints c = new GridBagConstraints();
+
+        c.gridx = 0;
+        c.gridy = 0;
+        c.anchor = GridBagConstraints.LINE_START;
+        c.insets = Utils.pad10;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx=1;c.weighty=1;
+        this.add(new JLabel("Palavra:"), c);
+        c.gridx = 1;
+        c.gridy = 0;
+        textPalavra.setSize(200, 25);
+        this.add(textPalavra, c);
+
+        c.gridx = 0;
+        c.gridy = 1;
+        this.add(new JLabel("Traduzir do:"), c);
+        c.gridx = 1;
+        c.gridy = 1;
+        this.add(radioIngles, c);
+        c.gridx = 2;
+        c.gridy = 1;
+        this.add(radioPortugues, c);
+
         JButton btnTraduzir = new JButton("Traduzir");
         btnTraduzir.setIcon(getIconForButton("Edit24.gif"));
         btnTraduzir.addActionListener((ActionEvent e) -> {
             traduzirItem();
         });
-        
-        this.add(btnTraduzir, Utils.createGridBagConstraints(3, 1));
-        
-        this.add(new JLabel("Tradução:"), Utils.createGridBagConstraints(0, 2, Utils.pad10, null));
-        this.add(textTraducao, Utils.createGridBagConstraints(1, 2));
-        //this.add(new JLabel("wwwwww"), Utils.createGridBagConstraints(1, 2));
-        
-        
+
+        c.gridx = 0;
+        c.gridy = 2;
+        c.fill=GridBagConstraints.NONE;
+        this.add(btnTraduzir, c);
+
+        c.gridx = 0;
+        c.gridy = 3;
+        c.anchor = GridBagConstraints.CENTER;
+        this.add(labelResultado, c);
+
     }
 
+    /**
+     * Chama metodo do dicionario para traduzir a palavra inserida na GUI.
+     */
     private void traduzirItem() {
-        if (radioIngles.isSelected() == true) {
-           if (textPalavra.getText().isEmpty() == true) {
-                JOptionPane.showMessageDialog(null, "Por favor insira uma palavra.");
-            } else {
-                 textTraducao.setText("Traduzido para Inglês: '" + textPalavra.getText() + "'.");
+        try {
+            if (radioIngles.isSelected()) {
+                if (textPalavra.getText().isEmpty()) {
+                    Utils.showDialog("Por favor insira uma palavra.");
+                } else {
+                    String traducao = FrameDicionario.mainDicionario.traduzirPalavra(textPalavra.getText(), Dicionario.linguagemType.INGLES);
+                    labelResultado.setText("Palavra em Português: '" + traducao + "'.");
+                }
             }
-        }
-        if (radioPortugues.isSelected() == true) {
-            if (textPalavra.getText().isEmpty() == true) {
-                JOptionPane.showMessageDialog(null, "Por favor insira uma palavra.");
-            } else {
-                textTraducao.setText("Traduzido para Português: '" + textPalavra.getText() + "'.");
+            if (radioPortugues.isSelected()) {
+                if (textPalavra.getText().isEmpty()) {
+                    Utils.showDialog("Por favor insira uma palavra.");
+                } else {
+                    String traducao = FrameDicionario.mainDicionario.traduzirPalavra(textPalavra.getText(), Dicionario.linguagemType.PORTUGUES);
+                    labelResultado.setText("Palavra em Inglês: '" + traducao + "'.");
+                }
             }
+        } catch (TraducaoException e) {
+            Utils.showDialog(e.getMessage());
         }
     }
 }

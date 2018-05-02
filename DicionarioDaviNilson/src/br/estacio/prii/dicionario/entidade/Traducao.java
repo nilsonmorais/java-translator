@@ -25,8 +25,8 @@
 package br.estacio.prii.dicionario.entidade;
 
 /**
- * Classe traducao armazena um objeto com dois objetos Palavra.
- *
+ * Classe traducao implementa um componente abstrato que tem dois objetos do 
+ * tipo Palavra.
  */
 public class Traducao {
 
@@ -55,10 +55,36 @@ public class Traducao {
         }
     }
 
+    /**
+     * Retorna a String correpondente a palavra escolhida.
+     * @return 
+     */
+    public String getPalavraInglesString(){
+        return palavraIngles.toString();
+    }
+
+    /**
+     * Retorna a String correpondente a palavra escolhida.
+     * @return 
+     */
+    public String getPalavraPortuguesString(){
+        return palavraPortugues.toString();
+    }
+            
+
+    /**
+     * Retorna o Objeto Palavra que compoe o componente Traducao
+     * @return 
+     */
     public Palavra getPalavraIngles() {
         return palavraIngles;
     }
 
+    /**
+     * Retorna o Objeto Palavra que compoe o componente Traducao
+     *
+     * @return
+     */
     public Palavra getPalavraPortugues() {
         return palavraPortugues;
     }
